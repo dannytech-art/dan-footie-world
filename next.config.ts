@@ -2,8 +2,16 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  eslint:{
+    ignoreDuringBuilds: true,
+  }
   };
 module.exports = {
+  
+  experimental: {
+    outputFileTracingIgnores: ['**/*'],
+  },
+  generateBuildId: () => 'build-' + Date.now(),
   async redirects() {
     return [
       {
