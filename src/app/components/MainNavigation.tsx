@@ -18,7 +18,7 @@ import Link from 'next/link';
 import { MenuIcon, XIcon } from 'lucide-react';
 import { ModeToggle } from './ModeToggle';
 
-function MyNavigationmenu() {
+function MainNavigation() {  // Changed from MyNavigationMenu
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -304,4 +304,4 @@ function MyNavigationmenu() {
   );
 }
 
-export default MyNavigationmenu;
+export default MainNavigation;

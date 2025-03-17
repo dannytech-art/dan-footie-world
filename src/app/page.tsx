@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Mycarousel from './My components/Mycarousel'
-import Mynavigationmenu from './My components/MyNavigationmenu'
+import Mycarousel from './components/Mycarousel'
+import MyNavigationmenu from './components/MainNavigation'
 
 
 
@@ -9,7 +9,7 @@ import Mynavigationmenu from './My components/MyNavigationmenu'
 function page() {
   return (
     <div>
-<Mynavigationmenu />
+<MyNavigationmenu />
 <Mycarousel />
 
 
