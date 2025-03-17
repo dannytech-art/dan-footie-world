@@ -1,6 +1,8 @@
 import React from 'react'
-import Mynavigationmenu from './My components/Mynavigationmenu'
+
 import Mycarousel from './My components/Mycarousel'
+import Mynavigationmenu from './My components/MyNavigationmenu'
+
 
 
 

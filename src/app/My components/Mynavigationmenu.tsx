@@ -1,6 +1,5 @@
 "use client";
-
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import {
   NavigationMenu,
@@ -16,10 +15,10 @@ import { cn } from "src/lib/utils";
 
 import Link from 'next/link';
 
-import { MenuIcon, XIcon, ChevronDownIcon } from 'lucide-react';
+import { MenuIcon, XIcon } from 'lucide-react';
 import { ModeToggle } from './ModeToggle';
 
-function Mynavigationmenu() {
+function MyNavigationmenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -27,7 +26,7 @@ function Mynavigationmenu() {
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-lg font-bold text-primary">
-          Danny's Footie World
+          Danny&apos;s Footie World
         </Link>
 
         {/* Desktop Navigation */}
@@ -305,4 +304,4 @@ function Mynavigationmenu() {
   );
 }
 
-export default Mynavigationmenu;
+export default MyNavigationmenu;

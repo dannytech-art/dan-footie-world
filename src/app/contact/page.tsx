@@ -16,7 +16,7 @@ export default function Contact() {
   return (
     <div className="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24">
       <Head>
-        <title>Contact Us - Danny's Footie World</title>
+        <title>Contact Us - Danny&apos;s Footie World</title>
       </Head>
 
       <h1 className="text-3xl font-bold mb-4">Get in Touch</h1>
