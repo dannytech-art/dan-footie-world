@@ -63,7 +63,7 @@ const WomenShoesPage = () => {
               Step Into Elegance
             </motion.h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Discover our curated collection of premium women's footwear blending 
+              Discover our curated collection of premium women&apos;s footwear blending 
               style, comfort, and sophistication. Crafted with precision for the modern woman.
             </p>
             <div className="flex gap-4">

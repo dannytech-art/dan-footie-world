@@ -11,6 +11,7 @@ const TypingBanner = () => {
     "Discover our most popular and best-selling footwear items",
      
   ];
+  const [currentPhrase, setCurrentPhrase] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -35,7 +36,7 @@ const TypingBanner = () => {
 
     const timer = setTimeout(handleTyping, isDeleting ? 50 : 100);
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting]);
+  }, [currentPhrase, displayText, isDeleting, phrases]); // Add phrases here
 
   
   return (

@@ -37,7 +37,7 @@ const TypingBanner = () => {
 
     const timer = setTimeout(handleTyping, isDeleting ? 50 : 100);
     return () => clearTimeout(timer);
-  }, [displayText, isDeleting, currentPhrase]);
+  }, [currentPhrase, displayText, isDeleting, phrases]); // Add phrases here
 
   return (
     <motion.div
@@ -52,7 +52,6 @@ const TypingBanner = () => {
 
 // Updated MainNavigation component
 function MainNavigation() {
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <nav className="fixed w-full top-0 z-50 bg-white dark:bg-gray-950 shadow-sm">

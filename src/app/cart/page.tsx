@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useCart } from "../../context/CartContext";
 import Link from 'next/link';
 import MainNavigation from "../components/MainNavigation";
+import Image from 'next/image';
 
 const CartPage = () => {
   const { cart, clearCart } = useCart();
@@ -43,20 +44,21 @@ const CartPage = () => {
             <tbody>
               {cart.map((item, index) => (
                 <tr key={item.id} className="border-b">
-                  <td className="py-4">{index + 1}</td>
-                  <td className="py-4">
-                    <div className="flex items-center gap-4">
-                      <img 
-                        src={item.image} 
-                        alt={item.name} 
-                        className="w-16 h-16 object-cover rounded"
-                      />
-                      <span>{item.name}</span>
-                    </div>
-                  </td>
-                  <td className="py-4">{item.price}</td>
-                  <td className="py-4">{item.date}</td>
-                </tr>
+                <td className="py-4">{index + 1}</td>
+                <td className="py-4">
+                  <div className="flex items-center gap-4">
+                    <Image 
+                      src={item.image} 
+                      alt={item.name} 
+                      width={64}
+                      height={64}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                </td>
+                {/* ... */}
+              </tr>
               ))}
             </tbody>
           </table>

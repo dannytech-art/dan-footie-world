@@ -63,7 +63,7 @@ const MenShoesPage = () => {
               Step Into Excellence
             </motion.h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
-              Discover our curated collection of premium men's footwear blending 
+              Discover our curated collection of premium men&apos;s footwear blending 
               style, comfort, and durability. Crafted with precision for the modern man.
             </p>
             <div className="flex gap-4">
