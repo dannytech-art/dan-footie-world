@@ -18,11 +18,11 @@ export default function FullSlider() {
   const [count, setCount] = React.useState(0)
 
   const images = [
-    '/assets/slide1.jpg',
-    '/assets/slide2.jpg',
-    '/assets/slide3.jpg',
-    '/assets/slide4.jpg', // New slide
-    '/assets/slide5.jpg'  // New slide
+    '/images/slide1.jpg',
+    '/images/slide2.jpg',
+    '/images/slide3.jpg',
+    '/images/slide4.jpg', // New slide
+    '/images/slide5.jpg', // New slide
   ]
 
   React.useEffect(() => {

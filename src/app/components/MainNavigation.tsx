@@ -42,25 +42,28 @@ function MainNavigation() {  // Changed from MyNavigationMenu
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Products</NavigationMenuTrigger>
                 <NavigationMenuContent className="w-screen">
-                  <div className="grid gap-4 p-4 md:w-[100vw] lg:grid-cols-3">
+                  <div className="grid gap-2 p-2 md:w-[60vw] lg:grid-cols-3">
                     {/* Men's Section */}
                     <div className="space-y-2">
-                      <Link href="/products/men" className="font-semibold hover:text-primary">
-                        Men
+                     <Link href="/men" className="font-semibold hover:text-primary">
+                         Men
                       </Link>
                       <ul className="space-y-1">
                         <li>
-                          <Link href="/products/men/boots" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Boots
+                            
+                          <Link href="/men" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                          Boots/crocs
                           </Link>
                         </li>
                         <li>
-                          <Link href="/products/men/sneakers" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Sneakers
+                           
+                          
+                          <Link href="/men" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                           Sneakers
                           </Link>
                         </li>
                         <li>
-                          <Link href="/products/men/bespoke" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                          <Link href="/men" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
                             Bespoke
                           </Link>
                         </li>
@@ -69,23 +72,23 @@ function MainNavigation() {  // Changed from MyNavigationMenu
 
                     {/* Women's Section */}
                     <div className="space-y-2">
-                      <Link href="/products/women" className="font-semibold hover:text-primary">
+                      <Link href="/women" className="font-semibold hover:text-primary">
                         Women
                       </Link>
                       <ul className="space-y-1">
                         <li>
-                          <Link href="/products/women/boots" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Boots
+                          <Link href="/women" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                            Boots/crocs
                           </Link>
                         </li>
                         <li>
-                          <Link href="/products/women/sneakers" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                          <Link href="/women" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
                             Sneakers
                           </Link>
                         </li>
                         <li>
-                          <Link href="/products/women/bespoke" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Bespoke
+                          <Link href="/women" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                            Flat
                           </Link>
                         </li>
                       </ul>
@@ -93,23 +96,23 @@ function MainNavigation() {  // Changed from MyNavigationMenu
 
                     {/* Children's Section */}
                     <div className="space-y-2">
-                      <Link href="/products/children" className="font-semibold hover:text-primary">
-                        Children
+                      <Link href="/unisex" className="font-semibold hover:text-primary">
+                        Unisex
                       </Link>
                       <ul className="space-y-1">
                         <li>
-                          <Link href="/products/children/boots" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Boots
+                          <Link href="/unisex" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                            Boots/Loafers
                           </Link>
                         </li>
                         <li>
-                          <Link href="/products/children/sneakers" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                          <Link href="/unisex" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
                             Sneakers
                           </Link>
                         </li>
                         <li>
-                          <Link href="/products/children/bespoke" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
-                            Bespoke
+                          <Link href="/unisex" className="flex p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800">
+                            Sandals
                           </Link>
                         </li>
                       </ul>
@@ -124,8 +127,8 @@ function MainNavigation() {  // Changed from MyNavigationMenu
                 <NavigationMenuContent className="w-screen">
                   <div className="grid grid-cols-2 gap-4 p-4 w-[100vw]">
                     <div className="space-y-2">
-                      <Link href="/documentation" className="block p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
-                        Documentation
+                      <Link href="/cart" className="block p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
+                        Cart
                       </Link>
                       <Link href="/blog" className="block p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
                         Blog
@@ -209,49 +212,49 @@ function MainNavigation() {  // Changed from MyNavigationMenu
                 <div className="grid gap-2">
                   {/* Men's Mobile Links */}
                   <div className="space-y-2">
-                    <Link href="/products/men" className="px-6 font-medium block hover:text-primary">
+                    <Link href="/men" className="px-6 font-medium block hover:text-primary">
                       Men
                     </Link>
-                    <Link href="/products/men/boots" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
-                      Boots
+                    <Link href="/men" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                      Boots/crocs
                     </Link>
-                    <Link href="/products/men/sneakers" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <Link href="/men" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
                       Sneakers
                     </Link>
-                    <Link href="/products/men/bespoke" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <Link href="/men" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
                       Bespoke
                     </Link>
                   </div>
 
                   {/* Women's Mobile Links */}
                   <div className="space-y-2">
-                    <Link href="/products/women" className="px-6 font-medium block hover:text-primary">
+                    <Link href="/women" className="px-6 font-medium block hover:text-primary">
                       Women
                     </Link>
-                    <Link href="/products/women/boots" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
-                      Boots
+                    <Link href="/women" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                      Boots/crocs
                     </Link>
-                    <Link href="/products/women/sneakers" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <Link href="/women" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
                       Sneakers
                     </Link>
-                    <Link href="/products/women/bespoke" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
-                      Bespoke
+                    <Link href="/women" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                      Flat
                     </Link>
                   </div>
 
                   {/* Children's Mobile Links */}
                   <div className="space-y-2">
-                    <Link href="/products/children" className="px-6 font-medium block hover:text-primary">
-                      Children
+                    <Link href="/unisex" className="px-6 font-medium block hover:text-primary">
+                      Unisex
                     </Link>
-                    <Link href="/products/children/boots" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
-                      Boots
+                    <Link href="/unisex" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                      Boots/Loafers
                     </Link>
-                    <Link href="/products/children/sneakers" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <Link href="/unisex" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
                       Sneakers
                     </Link>
-                    <Link href="/products/children/bespoke" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
-                      Bespoke
+                    <Link href="/unisex" className="px-8 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                      Sandals
                     </Link>
                   </div>
                 </div>
@@ -260,8 +263,8 @@ function MainNavigation() {  // Changed from MyNavigationMenu
               {/* Resources Mobile Links */}
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold px-4">Resources</h3>
-                <Link href="/documentation" className="px-6 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
-                  Documentation
+                <Link href="/cart" className="px-6 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
+                  Cart
                 </Link>
                 <Link href="/blog" className="px-6 py-2 block hover:bg-gray-100 dark:hover:bg-gray-800">
                   Blog
