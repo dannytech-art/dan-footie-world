@@ -1,16 +1,17 @@
 "use client";
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from "framer-motion";
 import { ShoppingCartIcon } from 'lucide-react';
 
 // Add this new component
 const TypingBanner = () => {
-  const phrases = [
+  const phrases = useMemo(() => [
     "We bring to you the best offers",
     "Quality over mediocrity",
     "Shop with us"
-  ];
+  ], []);
+
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -37,7 +38,7 @@ const TypingBanner = () => {
 
     const timer = setTimeout(handleTyping, isDeleting ? 50 : 100);
     return () => clearTimeout(timer);
-  }, [currentPhrase, displayText, isDeleting, phrases]); // Add phrases here
+  }, [currentPhrase, displayText, isDeleting, phrases]);
 
   return (
     <motion.div

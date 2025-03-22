@@ -7,15 +7,16 @@ import MainNavigation from './components/MainNavigation';
 import Mycarousel from './components/Mycarousel';
 
 const TypingBanner = () => {
-  const phrases = [
-    "Discover our most popular and best-selling footwear items",
-     
-  ];
-  const [currentPhrase, setCurrentPhrase] = useState(0);
+
+  const [currentPhrase ] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
+    const phrases = [
+      "Discover our most popular and best-selling footwear items",
+       
+    ];
     const handleTyping = () => {
       const fullText = phrases[0];
       
@@ -36,7 +37,7 @@ const TypingBanner = () => {
 
     const timer = setTimeout(handleTyping, isDeleting ? 50 : 100);
     return () => clearTimeout(timer);
-  }, [currentPhrase, displayText, isDeleting, phrases]); // Add phrases here
+  }, [currentPhrase, displayText, isDeleting]);// Add phrases here
 
   
   return (
