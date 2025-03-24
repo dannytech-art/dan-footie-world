@@ -1,81 +1,191 @@
 "use client";
-import { motion } from "framer-motion";
-import { useCart } from "../../context/CartContext";
+import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "src/stores/cart.store";
 import Link from 'next/link';
-import MainNavigation from "../components/MainNavigation";
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { FiShoppingBag, FiX, FiPlus, FiMinus } from 'react-icons/fi';
 
 const CartPage = () => {
-  const { cart, clearCart } = useCart();
+  const { cart, clearCart, removeFromCart, updateQuantity } = useCart();
+  const [isMounted, setIsMounted] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const calculateTotal = () => {
-    return cart.reduce((sum, item) => sum + Number(item.price.replace('$', '')), 0).toFixed(2);
+    const subtotal = cart.reduce((sum, item) => 
+      sum + (Number(item.price.replace('$', '')) * item.quantity), 0);
+    return (subtotal - discount).toFixed(2);
   };
+
+  const applyPromo = () => {
+    // Simple promo code example
+    if (promoCode.toUpperCase() === 'SAVE10') {
+      setDiscount(10);
+    }
+  };
+
+  if (!isMounted) return null;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <MainNavigation />
-      
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className="container py-16 px-4 md:px-6"
       >
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Shopping Cart ({cart.length})</h1>
-          <button
-            onClick={clearCart}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          >
-            Clear Cart
-          </button>
-        </div>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between gap-8">
+            {/* Cart Items */}
+            <div className="md:w-2/3">
+              <div className="flex justify-between items-center mb-8">
+                <h1 className="text-3xl font-bold flex items-center gap-2">
+                  <FiShoppingBag className="w-6 h-6" />
+                  Your Cart ({cart.length})
+                </h1>
+                {cart.length > 0 && (
+                  <button
+                    onClick={clearCart}
+                    className="text-red-500 hover:text-red-600 flex items-center gap-1"
+                  >
+                    <FiX className="w-5 h-5" />
+                    Clear Cart
+                  </button>
+                )}
+              </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-4">S/N</th>
-                <th className="text-left py-4">Product</th>
-                <th className="text-left py-4">Price</th>
-                <th className="text-left py-4">Date Added</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((item, index) => (
-                <tr key={item.id} className="border-b">
-                <td className="py-4">{index + 1}</td>
-                <td className="py-4">
-                  <div className="flex items-center gap-4">
-                    <Image 
-                      src={item.image} 
-                      alt={item.name} 
-                      width={64}
-                      height={64}
-                      className="w-16 h-16 object-cover rounded"
-                    />
-                    <span>{item.name}</span>
+              <AnimatePresence>
+                {cart.length === 0 ? (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-12"
+                  >
+                    <div className="text-4xl mb-4">🛒</div>
+                    <h2 className="text-xl mb-4">Your cart is empty</h2>
+                    <Link href="/products" className="btn-primary">
+                      Start Shopping
+                    </Link>
+                  </motion.div>
+                ) : (
+                  <div className="space-y-4">
+                    {cart.map((item, index) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, x: 50 }}
+                        className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm"
+                      >
+                        <div className="flex items-center gap-4">
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={96}
+                            height={96}
+                            className="w-24 h-24 object-cover rounded-lg"
+                          />
+                          <div className="flex-1">
+                            <h3 className="font-medium">{item.name}</h3>
+                            <p className="text-gray-500 dark:text-gray-400">
+                              {item.category}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-1">
+                              <button
+                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                className="hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full p-1"
+                              >
+                                <FiMinus className="w-4 h-4" />
+                              </button>
+                              <span className="w-6 text-center">{item.quantity}</span>
+                              <button
+                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                className="hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full p-1"
+                              >
+                                <FiPlus className="w-4 h-4" />
+                              </button>
+                            </div>
+                            <div className="w-24 text-right">
+                              <span className="font-medium">{item.price}</span>
+                            </div>
+                            <button
+                              onClick={() => removeFromCart(item.id)}
+                              className="text-gray-400 hover:text-red-500"
+                            >
+                              <FiX className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
                   </div>
-                </td>
-                {/* ... */}
-              </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                )}
+              </AnimatePresence>
+            </div>
 
-        <div className="mt-8 text-right">
-          <div className="text-2xl font-bold mb-4">
-            Total: ${calculateTotal()}
+            {/* Summary */}
+            {cart.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="md:w-1/3"
+              >
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm sticky top-8">
+                  <h2 className="text-xl font-bold mb-4">Order Summary</h2>
+                  
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between">
+                      <span>Subtotal</span>
+                      <span>${calculateTotal()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Discount</span>
+                      <span className="text-green-500">-${discount}</span>
+                    </div>
+                  </div>
+
+                  <div className="mb-6">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Promo code"
+                        value={promoCode}
+                        onChange={(e) => setPromoCode(e.target.value)}
+                        className="flex-1 border rounded-lg px-4 py-2"
+                      />
+                      <button
+                        onClick={applyPromo}
+                        className="btn-secondary whitespace-nowrap"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <div className="flex justify-between font-bold mb-4">
+                      <span>Total</span>
+                      <span>${calculateTotal()}</span>
+                    </div>
+                    <button className="btn-primary w-full">
+                      Checkout Now
+                    </button>
+                  </div>
+
+                  <Link href="/products" className="mt-4 inline-block w-full text-center text-primary hover:underline">
+                    Continue Shopping
+                  </Link>
+                </div>
+              </motion.div>
+            )}
           </div>
-          <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition">
-            Proceed to Payment
-          </button>
         </div>
-
-        <Link href="/" className="mt-8 inline-block text-primary hover:underline">
-          ← Continue Shopping
-        </Link>
       </motion.div>
     </div>
   );

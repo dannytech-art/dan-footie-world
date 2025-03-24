@@ -1,53 +1,58 @@
 "use client";
-import Link from 'next/link'; // Ensure you import Link from next/link
+import Link from 'next/link';
 import { motion } from "framer-motion";
 import { useState } from "react";
 import MainNavigation from "../components/MainNavigation";
 import Image from "next/image";
-import { ShoppingCartIcon } from 'lucide-react'; // Import ShoppingCartIcon
-import { useCart } from '../../context/CartContext'; // Import useCart
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { ShoppingCartIcon } from 'lucide-react';
+import { useCart } from 'src/stores/cart.store';
+import { useRouter } from 'next/navigation';
 
 const UnisexShoesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   
+  // Updated product data without IDs
   const trendingProducts = [
     {
-      id: 1,
       image: "/images/utrend1.jpg",
-      name: "Boots"
+      name: "Boots",
+      price: "$120.00"
     },
     {
-      id: 2,
       image: "/images/utrend2.jpg",
-      name: "Loafers"
+      name: "Loafers",
+      price: "$110.00"
     },
     {
-      id: 3,
       image: "/images/utrend3.jpg",
-      name: "Sneakers"
+      name: "Sneakers",
+      price: "$140.00"
     },
     {
-      id: 4,
       image: "/images/utrend4.jpg",
-      name: "Sandals"
+      name: "Sandals",
+      price: "$200.00"
     }
   ];
 
   const featuredProducts = Array(36).fill(null).map((_, i) => ({
-    id: i + 1,
-    name: `Product ${i + 1}`,
+    name: `Universal Style ${i + 1}`,
     price: `$${(120 + i * 10).toFixed(2)}`,
     image: `/images/uimg${i + 1}.jpg`
   }));
 
-  const { addToCart } = useCart(); // Use the addToCart function
-  const router = useRouter(); // Use the useRouter hook
+  const { addToCart } = useCart();
+  const router = useRouter();
+
+  const handleAddToCart = (product: { name: string; price: string; image: string }) => {
+    addToCart(product);
+    router.push('/cart');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <MainNavigation />
-      
+
       {/* Hero Section */}
       <motion.section 
         initial={{ opacity: 0, y: 20 }}
@@ -56,10 +61,8 @@ const UnisexShoesPage = () => {
         className="container py-16 px-4 md:px-6"
       >
         <div className="flex flex-col md:flex-row gap-8 items-center">
-          {/* Write-up */}
           <div className="md:w-1/2 space-y-6">
-            <motion.h1 
-              className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            <motion.h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
               Step Into Versatility
             </motion.h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
@@ -77,7 +80,6 @@ const UnisexShoesPage = () => {
             </div>
           </div>
 
-          {/* Image */}
           <motion.div 
             className="md:w-1/2"
             whileHover={{ scale: 1.02 }}
@@ -118,43 +120,31 @@ const UnisexShoesPage = () => {
           Trending Now
         </h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {trendingProducts.map((product) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {trendingProducts.map((product, index) => (
             <motion.div 
-              key={product.id}
+              key={index}
               whileHover={{ scale: 1.05 }}
-              className="group relative"
+              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg"
             >
               <Image
                 src={product.image}
                 alt={product.name}
                 width={300}
                 height={300}
-                className="rounded-lg shadow-md w-full h-48 object-cover"
+                className="w-full h-48 object-cover rounded-lg"
               />
               <div className="mt-4 flex flex-col items-center">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   {product.name}
                 </h3>
-                <div className="flex gap-2 mt-2">
-                  <button className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark dark:text-black">
-                    Shop
-                  </button>
-                  <button 
-                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                    onClick={() => {
-                      addToCart({
-                        id: product.id,
-                        name: product.name,
-                        price: `$${(120 + product.id * 10).toFixed(2)}`, // Adjust pricing logic as needed
-                        image: product.image
-                      });
-                      router.push('/cart');
-                    }}
-                  >
-                    Add
-                  </button>
-                </div>
+                <p className="text-primary text-lg font-bold my-2">{product.price}</p>
+                <button 
+                  className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </motion.div>
           ))}
@@ -172,13 +162,13 @@ const UnisexShoesPage = () => {
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
-          {featuredProducts.map((product) => (
+          {featuredProducts.map((product, index) => (
             <motion.div
-              key={product.id}
+              key={index}
               whileHover={{ scale: 1.03 }}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md"
+              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg"
             >
               <Image
                 src={product.image}
@@ -192,13 +182,10 @@ const UnisexShoesPage = () => {
               </h3>
               <p className="text-xl font-bold text-primary mb-4">{product.price}</p>
               <button 
-                className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition dark:bg-gray-100 dark:text-black dark:hover:bg-gray-300"
-                onClick={() => {
-                  addToCart(product);
-                  router.push('/cart');
-                }}
+                className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition"
+                onClick={() => handleAddToCart(product)}
               >
-               Add to Cart
+                Add to Cart
               </button>
             </motion.div>
           ))}
@@ -206,32 +193,35 @@ const UnisexShoesPage = () => {
       </section>
 
       {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }} // Add this to ensure animation triggers once
-        className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t"
+      <footer className="border-t mt-16 py-8 px-4 md:px-6">
+        <div className="container mx-auto text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            &copy; 2024 Universal Footwear. All rights reserved.
+          </p>
+          <nav className="mt-4 flex justify-center gap-4">
+            <Link href="#" className="text-xs hover:underline underline-offset-4">
+              Terms of Service
+            </Link>
+            <Link href="#" className="text-xs hover:underline underline-offset-4">
+              Privacy
+            </Link>
+          </nav>
+        </div>
+      </footer>
+
+      {/* Floating Cart Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed bottom-8 right-8 z-50"
       >
-        <p className="text-xs text-muted-foreground">
-          &copy; 2024 Footwear Co. All rights reserved.
-        </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link href="#" className="text-xs hover:underline underline-offset-4">
-            Terms of Service
-          </Link>
-          <Link href="#" className="text-xs hover:underline underline-offset-4">
-            Privacy
-          </Link>
-        </nav>
-        {/* Cart Button */}
         <Link href="/cart">
-          <button 
-            className="fixed top-4 right-4 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary-dark transition transform active:scale-110 z-10"
-          >
+          <button className="p-4 rounded-full bg-primary text-white shadow-xl hover:bg-primary-dark transition-transform active:scale-95 flex items-center gap-2">
             <ShoppingCartIcon className="h-6 w-6" />
+            <span className="font-medium">View Cart</span>
           </button>
         </Link>
-      </motion.footer>
+      </motion.div>
     </div>
   );
 };

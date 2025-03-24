@@ -1,53 +1,58 @@
 "use client";
-import Link from 'next/link'; // Ensure you import Link from next/link
+import Link from 'next/link';
 import { motion } from "framer-motion";
 import { useState } from "react";
 import MainNavigation from "../components/MainNavigation";
 import Image from "next/image";
-import { ShoppingCartIcon } from 'lucide-react'; // Import ShoppingCartIcon
-import { useCart } from '../../context/CartContext'; // Import useCart
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { ShoppingCartIcon } from 'lucide-react';
+import { useCart } from 'src/stores/cart.store';
+import { useRouter } from 'next/navigation';
 
 const MenShoesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   
+  // Updated product data without IDs
   const trendingProducts = [
     {
-      id: 1,
       image: "/images/trend1.jpg",
-      name: "Boots"
+      name: "Boots",
+      price: "$120.00"
     },
     {
-      id: 2,
       image: "/images/trend2.jpg",
-      name: "Crocs"
+      name: "Crocs",
+      price: "$110.00"
     },
     {
-      id: 3,
       image: "/images/trend3.jpg",
-      name: "Sneakers"
+      name: "Sneakers",
+      price: "$140.00"
     },
     {
-      id: 4,
       image: "/images/trend4.jpg",
-      name: "Bespoke"
+      name: "Bespoke",
+      price: "$200.00"
     }
   ];
 
   const featuredProducts = Array(36).fill(null).map((_, i) => ({
-    id: i + 1,
-    name: `Product ${i + 1}`, // Change this text as needed
+    name: `Premium Shoe ${i + 1}`,
     price: `$${(120 + i * 10).toFixed(2)}`,
-    image: `/images/img${i + 1}.jpg` // Ensure images are named img1.jpg to img36.jpg
+    image: `/images/img${i + 1}.jpg`
   }));
 
-  const { addToCart } = useCart(); // Use the addToCart function
-  const router = useRouter(); // Use the useRouter hook
+  const { addToCart } = useCart();
+  const router = useRouter();
+
+  const handleAddToCart = (product: { name: string; price: string; image: string }) => {
+    addToCart(product);
+    router.push('/cart');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <MainNavigation />
-      
+
       {/* Hero Section */}
       <motion.section 
         initial={{ opacity: 0, y: 20 }}
@@ -56,15 +61,13 @@ const MenShoesPage = () => {
         className="container py-16 px-4 md:px-6"
       >
         <div className="flex flex-col md:flex-row gap-8 items-center">
-          {/* Write-up */}
           <div className="md:w-1/2 space-y-6">
-            <motion.h1 
-              className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            <motion.h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
               Step Into Excellence
             </motion.h1>
             <p className="text-lg text-gray-600 dark:text-gray-300">
               Discover our curated collection of premium men&apos;s footwear blending 
-              style, comfort, and durability. Crafted with precision for the modern man.
+              style, comfort, and durability.
             </p>
             <div className="flex gap-4">
               <button className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition dark:text-black">
@@ -76,7 +79,6 @@ const MenShoesPage = () => {
             </div>
           </div>
 
-          {/* Image */}
           <motion.div 
             className="md:w-1/2"
             whileHover={{ scale: 1.02 }}
@@ -114,46 +116,34 @@ const MenShoesPage = () => {
         <div className="max-w-4xl mx-auto border-t-2 border-gray-200 dark:border-gray-700 my-8"></div>
         
         <h2 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Our Offers
+          Trending Now
         </h2>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {trendingProducts.map((product) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {trendingProducts.map((product, index) => (
             <motion.div 
-              key={product.id}
+              key={index}
               whileHover={{ scale: 1.05 }}
-              className="group relative"
+              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg"
             >
               <Image
                 src={product.image}
                 alt={product.name}
                 width={300}
                 height={300}
-                className="rounded-lg shadow-md w-full h-48 object-cover"
+                className="w-full h-48 object-cover rounded-lg"
               />
               <div className="mt-4 flex flex-col items-center">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                   {product.name}
                 </h3>
-                <div className="flex gap-2 mt-2">
-                  <button className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark dark:text-black">
-                    Shop
-                  </button>
-                  <button 
-                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
-                    onClick={() => {
-                      addToCart({
-                        id: product.id,
-                        name: product.name,
-                        price: `$${(120 + product.id * 10).toFixed(2)}`, // Adjust pricing logic as needed
-                        image: product.image
-                      });
-                      router.push('/cart');
-                    }}
-                  >
-                    Add
-                  </button>
-                </div>
+                <p className="text-primary text-lg font-bold my-2">{product.price}</p>
+                <button 
+                  className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </motion.div>
           ))}
@@ -165,19 +155,19 @@ const MenShoesPage = () => {
         <div className="max-w-4xl mx-auto border-t-2 border-gray-200 dark:border-gray-700 my-8"></div>
         
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Featured Products
+          Featured Collection
         </h2>
 
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
-          {featuredProducts.map((product) => (
+          {featuredProducts.map((product, index) => (
             <motion.div
-              key={product.id}
+              key={index}
               whileHover={{ scale: 1.03 }}
-              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md"
+              className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg"
             >
               <Image
                 src={product.image}
@@ -191,13 +181,10 @@ const MenShoesPage = () => {
               </h3>
               <p className="text-xl font-bold text-primary mb-4">{product.price}</p>
               <button 
-                className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition dark:bg-gray-100 dark:text-black dark:hover:bg-gray-300"
-                onClick={() => {
-                  addToCart(product);
-                  router.push('/cart');
-                }}
+                className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-dark transition"
+                onClick={() => handleAddToCart(product)}
               >
-               Add to Cart
+                Add to Cart
               </button>
             </motion.div>
           ))}
@@ -205,33 +192,37 @@ const MenShoesPage = () => {
       </section>
 
       {/* Footer */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }} // Add this to ensure animation triggers once
-        className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t"
+      <footer className="border-t mt-16 py-8 px-4 md:px-6">
+        <div className="container mx-auto text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            &copy; 2024 Elite Footwear. All rights reserved.
+          </p>
+          <nav className="mt-4 flex justify-center gap-4">
+            <Link href="#" className="text-xs hover:underline underline-offset-4">
+              Terms of Service
+            </Link>
+            <Link href="#" className="text-xs hover:underline underline-offset-4">
+              Privacy
+            </Link>
+          </nav>
+        </div>
+      </footer>
+
+      {/* Floating Cart Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="fixed bottom-8 right-8 z-50"
       >
-        <p className="text-xs text-muted-foreground">
-          &copy; 2024 Footwear Co. All rights reserved.
-        </p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link href="#" className="text-xs hover:underline underline-offset-4">
-            Terms of Service
-          </Link>
-          <Link href="#" className="text-xs hover:underline underline-offset-4">
-            Privacy
-          </Link>
-        </nav>
-        {/* Cart Button */}
         <Link href="/cart">
-          <button 
-            className="fixed top-4 right-4 p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary-dark transition transform active:scale-110 z-10"
-          >
+          <button className="p-4 rounded-full bg-primary text-white shadow-xl hover:bg-primary-dark transition-transform active:scale-95 flex items-center gap-2">
             <ShoppingCartIcon className="h-6 w-6" />
+            <span className="font-medium">View Cart</span>
           </button>
         </Link>
-      </motion.footer>
+      </motion.div>
     </div>
   );
 };
+
 export default MenShoesPage;

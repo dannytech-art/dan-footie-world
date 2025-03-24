@@ -47,6 +47,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      react-icons:
+        specifier: ^5.5.0
+        version: 5.5.0(react@19.0.0)
       remark:
         specifier: ^15.0.1
         version: 15.0.1
@@ -62,6 +65,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.0.14)
+      zustand:
+        specifier: ^5.0.3
+        version: 5.0.3(@types/react@19.0.10)(react@19.0.0)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3
@@ -1981,6 +1987,11 @@ packages:
     peerDependencies:
       react: ^19.0.0
 
+  react-icons@5.5.0:
+    resolution: {integrity: sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==}
+    peerDependencies:
+      react: '*'
+
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
@@ -2389,6 +2400,24 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zustand@5.0.3:
+    resolution: {integrity: sha512-14fwWQtU3pH4dE0dOpdMiWjddcH+QzKIgk1cl8epwSE7yag43k/AD/m4L6+K7DytAOr9gGBe3/EXj9g7cdostg==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -4482,6 +4511,10 @@ snapshots:
       react: 19.0.0
       scheduler: 0.25.0
 
+  react-icons@5.5.0(react@19.0.0):
+    dependencies:
+      react: 19.0.0
+
   react-is@16.13.1: {}
 
   react-remove-scroll-bar@2.3.8(@types/react@19.0.10)(react@19.0.0):
@@ -5020,5 +5053,10 @@ snapshots:
       strip-ansi: 7.1.0
 
   yocto-queue@0.1.0: {}
+
+  zustand@5.0.3(@types/react@19.0.10)(react@19.0.0):
+    optionalDependencies:
+      '@types/react': 19.0.10
+      react: 19.0.0
 
   zwitch@2.0.4: {}
