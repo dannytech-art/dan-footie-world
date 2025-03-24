@@ -73,7 +73,7 @@ const CartPage = () => {
                   </motion.div>
                 ) : (
                   <div className="space-y-4">
-                    {cart.map((item, index) => (
+                    {cart.map((item) => (
                       <motion.div
                         key={item.id}
                         initial={{ opacity: 0, y: 20 }}
