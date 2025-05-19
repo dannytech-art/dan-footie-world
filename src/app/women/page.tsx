@@ -1,17 +1,18 @@
 "use client";
 import Link from 'next/link';
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import MainNavigation from "../components/MainNavigation";
 import Image from "next/image";
 import { ShoppingCartIcon } from 'lucide-react';
 import { useCart } from 'src/stores/cart.store';
-import { useRouter } from 'next/navigation';
+import { FiCheck } from 'react-icons/fi';
 
 const WomenShoesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // Updated product data without IDs
+  const [showNotification, setShowNotification] = useState(false);
+  const { cart, addToCart } = useCart();
+
   const trendingProducts = [
     {
       image: "/images/wtrend1.jpg",
@@ -41,17 +42,52 @@ const WomenShoesPage = () => {
     image: `/images/wimg${i + 1}.jpg`
   }));
 
-  const { addToCart } = useCart();
-  const router = useRouter();
-
   const handleAddToCart = (product: { name: string; price: string; image: string }) => {
-    addToCart(product);
-    router.push('/cart');
+    addToCart({
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: "Women Shoes",
+      id: product.name,
+      quantity: 1
+    } as any); // Replace `as any` with your proper CartItem type
+
+    setShowNotification(true);
   };
+
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <MainNavigation />
+
+      {/* Notification Popup */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50 bg-green-100/90 dark:bg-green-900/90 backdrop-blur-sm px-6 py-4 rounded-lg flex items-center gap-3 border-2 border-green-500"
+          >
+            <div className="flex items-center justify-center w-8 h-8 rounded-full border-4 border-green-500 bg-white dark:bg-gray-900">
+              <FiCheck className="w-5 h-5 text-green-500" />
+            </div>
+            <span className="text-green-700 dark:text-green-100 font-medium">
+              Item Added to Cart
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <motion.section 
@@ -114,11 +150,10 @@ const WomenShoesPage = () => {
       {/* Trending Section */}
       <section className="container py-12 px-4 md:px-6">
         <div className="max-w-4xl mx-auto border-t-2 border-gray-200 dark:border-gray-700 my-8"></div>
-        
         <h2 className="text-2xl font-bold text-center mb-8 text-gray-900 dark:text-white">
           Trending Now
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {trendingProducts.map((product, index) => (
             <motion.div 
@@ -153,7 +188,6 @@ const WomenShoesPage = () => {
       {/* Featured Products */}
       <section className="container py-12 px-4 md:px-6">
         <div className="max-w-4xl mx-auto border-t-2 border-gray-200 dark:border-gray-700 my-8"></div>
-        
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
           Featured Collection
         </h2>
@@ -208,16 +242,21 @@ const WomenShoesPage = () => {
         </div>
       </footer>
 
-      {/* Floating Cart Button */}
+      {/* Floating Cart Button with Counter */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="fixed bottom-8 right-8 z-50"
       >
         <Link href="/cart">
-          <button className="p-4 rounded-full bg-primary text-white shadow-xl hover:bg-primary-dark transition-transform active:scale-95 flex items-center gap-2">
+          <button className="p-4 rounded-full bg-primary text-white shadow-xl hover:bg-primary-dark transition-transform active:scale-95 flex items-center gap-2 relative">
             <ShoppingCartIcon className="h-6 w-6" />
             <span className="font-medium">View Cart</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                {totalItems}
+              </span>
+            )}
           </button>
         </Link>
       </motion.div>

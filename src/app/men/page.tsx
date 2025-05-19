@@ -1,17 +1,18 @@
 "use client";
 import Link from 'next/link';
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import MainNavigation from "../components/MainNavigation";
 import Image from "next/image";
 import { ShoppingCartIcon } from 'lucide-react';
 import { useCart } from 'src/stores/cart.store';
-import { useRouter } from 'next/navigation';
+import { FiCheck } from 'react-icons/fi';
 
 const MenShoesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  
-  // Updated product data without IDs
+  const [showNotification, setShowNotification] = useState(false);
+  const { cart, addToCart } = useCart();
+
   const trendingProducts = [
     {
       image: "/images/trend1.jpg",
@@ -41,17 +42,49 @@ const MenShoesPage = () => {
     image: `/images/img${i + 1}.jpg`
   }));
 
-  const { addToCart } = useCart();
-  const router = useRouter();
-
   const handleAddToCart = (product: { name: string; price: string; image: string }) => {
-    addToCart(product);
-    router.push('/cart');
+    addToCart({
+      id: product.name,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: "Men Shoes",
+      quantity: 1,
+    } as any);
+
+    setShowNotification(true);
   };
+
+
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
+
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <MainNavigation />
+
+      {/* Notification Popup */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-8 left-8 z-50 bg-green-500 text-white px-6 py-3 rounded-lg flex items-center gap-2"
+          >
+            <FiCheck className="w-5 h-5" />
+            Item Added to Cart
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <motion.section 
@@ -208,16 +241,21 @@ const MenShoesPage = () => {
         </div>
       </footer>
 
-      {/* Floating Cart Button */}
+      {/* Floating Cart Button with Counter */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="fixed bottom-8 right-8 z-50"
       >
         <Link href="/cart">
-          <button className="p-4 rounded-full bg-primary text-white shadow-xl hover:bg-primary-dark transition-transform active:scale-95 flex items-center gap-2">
+          <button className="p-4 rounded-full bg-primary text-white shadow-xl hover:bg-primary-dark transition-transform active:scale-95 flex items-center gap-2 relative">
             <ShoppingCartIcon className="h-6 w-6" />
             <span className="font-medium">View Cart</span>
+            {totalItems > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
+                {totalItems}
+              </span>
+            )}
           </button>
         </Link>
       </motion.div>

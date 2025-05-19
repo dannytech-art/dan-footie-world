@@ -1,30 +1,33 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "src/stores/cart.store";
-import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { FiShoppingBag, FiX, FiPlus, FiMinus } from 'react-icons/fi';
+import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { FiShoppingBag, FiX, FiPlus, FiMinus } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 
 const CartPage = () => {
   const { cart, clearCart, removeFromCart, updateQuantity } = useCart();
   const [isMounted, setIsMounted] = useState(false);
-  const [promoCode, setPromoCode] = useState('');
+  const [promoCode, setPromoCode] = useState("");
   const [discount, setDiscount] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   const calculateTotal = () => {
-    const subtotal = cart.reduce((sum, item) => 
-      sum + (Number(item.price.replace('$', '')) * item.quantity), 0);
+    const subtotal = cart.reduce(
+      (sum, item) => sum + Number(item.price.replace("$", "")) * item.quantity,
+      0
+    );
     return (subtotal - discount).toFixed(2);
   };
 
   const applyPromo = () => {
-    // Simple promo code example
-    if (promoCode.toUpperCase() === 'SAVE10') {
+    if (promoCode.toUpperCase() === "SAVE10") {
       setDiscount(10);
     }
   };
@@ -98,14 +101,20 @@ const CartPage = () => {
                           <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 rounded-full px-3 py-1">
                               <button
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
                                 className="hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full p-1"
                               >
                                 <FiMinus className="w-4 h-4" />
                               </button>
-                              <span className="w-6 text-center">{item.quantity}</span>
+                              <span className="w-6 text-center">
+                                {item.quantity}
+                              </span>
                               <button
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
                                 className="hover:bg-gray-200 dark:hover:bg-gray-600 rounded-full p-1"
                               >
                                 <FiPlus className="w-4 h-4" />
@@ -138,7 +147,7 @@ const CartPage = () => {
               >
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm sticky top-8">
                   <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-                  
+
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between">
                       <span>Subtotal</span>
@@ -178,9 +187,12 @@ const CartPage = () => {
                     </button>
                   </div>
 
-                  <Link href="/products" className="mt-4 inline-block w-full text-center text-primary hover:underline">
+                  <button
+                    onClick={() => router.back()}
+                    className="mt-4 inline-block w-full text-center text-green-600 hover:text-green-700 hover:underline"
+                  >
                     Continue Shopping
-                  </Link>
+                  </button>
                 </div>
               </motion.div>
             )}
