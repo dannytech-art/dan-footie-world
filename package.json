@@ -9,7 +9,9 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "clean": "rimraf .next node_modules dist out cache",
-    "type-check:watch": "tsc --noEmit --watch"
+    "type-check:watch": "tsc --noEmit --watch",
+    "push": "drizzle-kit push",
+    "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@daveyplate/better-auth-ui": "^1.5.8",
