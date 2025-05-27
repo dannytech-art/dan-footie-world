@@ -1,14 +1,16 @@
-import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
- id: text('id').primaryKey(),
- name: text('name').notNull(),
- email: text('email').notNull().unique(),
- emailVerified: boolean('email_verified').$defaultFn(() => false).notNull(),
- image: text('image'),
- createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull(),
- updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date()).notNull()
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  password: text('password').notNull(), // Added password field
+  emailVerified: boolean('email_verified').default(false).notNull(),
+  image: text('image'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull()
 });
+
 
 export const session = pgTable("session", {
  id: text('id').primaryKey(),
@@ -37,13 +39,11 @@ export const account = pgTable("account", {
  updatedAt: timestamp('updated_at').notNull()
 });
 
-export const verification = pgTable("verification", {
- id: text('id').primaryKey(),
- identifier: text('identifier').notNull(),
- value: text('value').notNull(),
- expiresAt: timestamp('expires_at').notNull(),
- createdAt: timestamp('created_at').$defaultFn(() => /* @__PURE__ */ new Date()),
- updatedAt: timestamp('updated_at').$defaultFn(() => /* @__PURE__ */ new Date())
+export const verificationToken = pgTable("verification_token", {
+  identifier: text('identifier').notNull(),
+  token: text('token').notNull(),
+  expires: timestamp('expires').notNull(),
+  createdAt: timestamp('created_at').defaultNow()
 });
 
-export const schema = {user, session, account, verification};
+export const schema = {user, session, account, verificationToken};

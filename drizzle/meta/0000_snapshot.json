@@ -1,5 +1,5 @@
 {
-  "id": "a6b6a4bb-8e85-4e23-b5ef-eebbf45322c9",
+  "id": "061903a6-c643-4de0-98d6-b4c493061a76",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -214,11 +214,18 @@
           "primaryKey": false,
           "notNull": true
         },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "email_verified": {
           "name": "email_verified",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": false
         },
         "image": {
           "name": "image",
@@ -230,13 +237,15 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},
@@ -255,30 +264,24 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.verification": {
-      "name": "verification",
+    "public.verification_token": {
+      "name": "verification_token",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
         "identifier": {
           "name": "identifier",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "value": {
-          "name": "value",
+        "token": {
+          "name": "token",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "expires_at": {
-          "name": "expires_at",
+        "expires": {
+          "name": "expires",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
@@ -287,13 +290,8 @@
           "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "now()"
         }
       },
       "indexes": {},

@@ -3,23 +3,17 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from "framer-motion";
 import { ShoppingCartIcon } from 'lucide-react';
-import MainNavigation from './components/MainNavigation';
+import MainNavigation from "./components/MainNavigation";
 import Mycarousel from './components/Mycarousel';
 
 const TypingBanner = () => {
-
-  const [currentPhrase ] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const phrases = [
-      "Discover our most popular and best-selling footwear items",
-       
-    ];
+    const fullText = "Discover our most popular and best-selling footwear items";
+
     const handleTyping = () => {
-      const fullText = phrases[0];
-      
       if (!isDeleting) {
         if (displayText === fullText) {
           setTimeout(() => setIsDeleting(true), 2000);
@@ -37,11 +31,10 @@ const TypingBanner = () => {
 
     const timer = setTimeout(handleTyping, isDeleting ? 50 : 100);
     return () => clearTimeout(timer);
-  }, [currentPhrase, displayText, isDeleting]);// Add phrases here
+  }, [displayText, isDeleting]);
 
-  
   return (
-    <div className="text-center text-xl font-light mb-8">
+    <div className="text-center text-xl font-light mb-8 px-4">
       {displayText}
     </div>
   );
@@ -49,12 +42,11 @@ const TypingBanner = () => {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white dark:bg-gray-950">
       <MainNavigation />
 
-      {/* Main Content */}
-      <main className="pt-24">
-        {/* Category Section */}
+      {/* Make room for the fixed nav */}
+      <main className="pt-24 px-4">
         <motion.section
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -74,12 +66,12 @@ export default function HomePage() {
                 viewport={{ once: true }}
                 className="group relative cursor-pointer"
               >
-  <Link href={`/${category}`}>
+                <Link href={`/${category}`}>
                   <div className="overflow-hidden rounded-xl shadow-lg">
                     {/* Updated image paths */}
                     <motion.img
                       whileHover={{ scale: 1.05 }}
-                      src={`/images/category${index + 1}.jpg`} // Now using category1.jpg, category2.jpg, category3.jpg
+                      src={`/images/category${index + 1}.jpg`}
                       alt={category}
                       className="w-full h-64 object-cover"
                     />
@@ -117,23 +109,22 @@ export default function HomePage() {
 
         {/* Footer */}
         <motion.footer
-  initial={{ opacity: 0 }}
-  whileInView={{ opacity: 1 }}
-  className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t"
->
-  <p className="text-xs text-muted-foreground">
-    &copy; 2024 Footwear Co. All rights reserved.
-  </p>
-  <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-    <Link href="#" className="text-xs hover:underline underline-offset-4">
-      Terms of Service
-    </Link>
-    <Link href="#" className="text-xs hover:underline underline-offset-4">
-      Privacy
-    </Link>
-  </nav>
-</motion.footer>
-
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="container flex flex-col gap-2 sm:flex-row py-6 w-full items-center border-t"
+        >
+          <p className="text-xs text-muted-foreground">
+            &copy; 2024 Footwear Co. All rights reserved.
+          </p>
+          <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+            <Link href="#" className="text-xs hover:underline underline-offset-4">
+              Terms of Service
+            </Link>
+            <Link href="#" className="text-xs hover:underline underline-offset-4">
+              Privacy
+            </Link>
+          </nav>
+        </motion.footer>
       </main>
 
       {/* Fixed Cart Button */}
@@ -143,7 +134,7 @@ export default function HomePage() {
         className="fixed bottom-4 right-4 z-50"
       >
         <Link href="/cart">
-          <button className="p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary-dark transition">
+          <button className="p-3 rounded-full bg-primary text-white shadow-lg hover:bg-primary/90 transition">
             <ShoppingCartIcon className="h-6 w-6" />
           </button>
         </Link>

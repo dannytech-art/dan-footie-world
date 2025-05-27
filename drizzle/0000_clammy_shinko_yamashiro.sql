@@ -30,20 +30,19 @@ CREATE TABLE "user" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL,
 	"email" text NOT NULL,
-	"email_verified" boolean NOT NULL,
+	"password" text NOT NULL,
+	"email_verified" boolean DEFAULT false NOT NULL,
 	"image" text,
-	"created_at" timestamp NOT NULL,
-	"updated_at" timestamp NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "user_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-CREATE TABLE "verification" (
-	"id" text PRIMARY KEY NOT NULL,
+CREATE TABLE "verification_token" (
 	"identifier" text NOT NULL,
-	"value" text NOT NULL,
-	"expires_at" timestamp NOT NULL,
-	"created_at" timestamp,
-	"updated_at" timestamp
+	"token" text NOT NULL,
+	"expires" timestamp NOT NULL,
+	"created_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
